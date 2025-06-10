@@ -979,7 +979,7 @@
         end"""
         str = """
         struct Foo
-            a::T
+            a :: T
         end"""
         @test fmt(str_, align_struct_field = true) == str
 
@@ -1035,10 +1035,10 @@
             format_docstrings::Bool                = false
             align_struct_fields::Bool              = false
 
-            another_field1::BlahBlahBlah = 10
-            field2::Foo = 10
+            another_field1::BlahBlahBlah           = 10
+            field2::Foo                            = 10
 
-            Options() = new()
+            Options()                              = new()
         end"""
         @test fmt(str_, align_struct_field = true) == str
 
@@ -1084,13 +1084,10 @@
             format_docstrings::Bool                = false
             align_struct_fields::Bool              = false
 
-            another_field1::BlahBlahBlah =
-                10
-            field2::Foo =
-                10
+            another_field1::BlahBlahBlah           = 10
+            field2::Foo                            = 10
 
-            Options() =
-                new()
+            Options()                              = new()
         end"""
         @test fmt(str, 4, 1, align_struct_field = true) == str
     end

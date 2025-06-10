@@ -1,5 +1,5 @@
 struct YASStyle <: AbstractStyle
-    innerstyle::AbstractStyle
+    innerstyle :: AbstractStyle
 end
 YASStyle() = YASStyle(NoopStyle())
 

@@ -1,13 +1,13 @@
 mutable struct State
-    doc::Document
-    indent::Int
-    offset::Int
-    line_offset::Int
+    doc         :: Document
+    indent      :: Int
+    offset      :: Int
+    line_offset :: Int
 
     # If true, output is formatted text otherwise
     # it's source text
-    on::Bool
-    opts::Options
+    on          :: Bool
+    opts        :: Options
 end
 State(doc, opts) = State(doc, 0, 1, 0, true, opts)
 

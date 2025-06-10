@@ -1,5 +1,5 @@
 struct BlueStyle <: AbstractStyle
-    innerstyle::AbstractStyle
+    innerstyle :: AbstractStyle
 end
 BlueStyle() = BlueStyle(NoopStyle())
 

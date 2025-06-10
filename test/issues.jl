@@ -1740,7 +1740,7 @@
         struct Foo
             \"foo
             \"\"\"
-            foo::String
+            foo :: String
         end
         """
         @test fmt(str, 4, 92, align_struct_field = true) == str

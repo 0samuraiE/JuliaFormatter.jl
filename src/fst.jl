@@ -88,37 +88,37 @@
 @enum(NestBehavior, AllowNest, AlwaysNest, NeverNest, NeverNestNode)
 
 struct Metadata
-    op_kind::Tokens.Kind
-    op_dotted::Bool
+    op_kind   :: Tokens.Kind
+    op_dotted :: Bool
 end
 
 """
 Formatted Syntax Tree
 """
 mutable struct FST
-    typ::FNode
+    typ           :: FNode
 
     # Start and end lines of the node
     # in the original source file.
-    startline::Int
-    endline::Int
+    startline     :: Int
+    endline       :: Int
 
-    indent::Int
-    len::Int
-    val::Union{Nothing,AbstractString}
-    nodes::Union{Nothing,Vector{FST}}
-    ref::Union{Nothing,Ref{CSTParser.EXPR}}
-    nest_behavior::NestBehavior
+    indent        :: Int
+    len           :: Int
+    val           :: Union{Nothing,AbstractString}
+    nodes         :: Union{Nothing,Vector{FST}}
+    ref           :: Union{Nothing,Ref{CSTParser.EXPR}}
+    nest_behavior :: NestBehavior
 
     # Extra margin caused by parent nodes.
     # i.e. `(f(arg))`
     #
     # `f(arg)` would have `extra_margin` = 1
     # due to `)` after `f(arg)`.
-    extra_margin::Int
-    line_offset::Int
+    extra_margin  :: Int
+    line_offset   :: Int
 
-    metadata::Union{Nothing,Metadata}
+    metadata      :: Union{Nothing,Metadata}
 end
 
 FST(typ::FNode, cst::CSTParser.EXPR, indent::Int) =

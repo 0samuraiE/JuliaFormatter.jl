@@ -1,5 +1,5 @@
 struct SciMLStyle <: AbstractStyle
-    innerstyle::AbstractStyle
+    innerstyle :: AbstractStyle
 end
 SciMLStyle() = SciMLStyle(NoopStyle())
 

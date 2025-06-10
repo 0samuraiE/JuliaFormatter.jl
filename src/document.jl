@@ -25,15 +25,15 @@ function tokenize(val::AbstractString)::Tokens.Kind
 end
 
 struct Document
-    text::AbstractString
+    text            :: AbstractString
 
-    range_to_line::SortedDict{UnitRange{Int},Int,IntervalTreeOrder}
-    line_to_range::Dict{Int,UnitRange{Int}}
+    range_to_line   :: SortedDict{UnitRange{Int},Int,IntervalTreeOrder}
+    line_to_range   :: Dict{Int,UnitRange{Int}}
 
     # mapping the offset in the file to the raw literal
     # string and what lines it starts and ends at.
-    lit_strings::Dict{Int,Tuple{Int,Int,String}}
-    comments::Dict{Int,Tuple{Int,String}}
+    lit_strings     :: Dict{Int,Tuple{Int,Int,String}}
+    comments        :: Dict{Int,Tuple{Int,String}}
 
     # CSTParser does not detect semicolons.
     # It's useful to know where these are for a few node types.
@@ -42,16 +42,16 @@ struct Document
     #
     # These counts are used for the multi-dimensional arrays syntax introduced inline
     # v1.7. For other purposes simply checking if the line has a semicolon is sufficient.
-    semicolons::Dict{Int,Vector{Int}}
+    semicolons      :: Dict{Int,Vector{Int}}
 
     # List of tuples where a tuple contains
     # the start and end lines of regions in the
     # file formatting should be skipped.
-    format_skips::Vector{Tuple{Int,Int,String}}
+    format_skips    :: Vector{Tuple{Int,Int,String}}
 
     # Line where there's a noindent comment. "#! format: noindent". This is checked during
     # the print stage to know if the contents of the block (recursive) should not be indented.
-    noindent_blocks::Vector{Int}
+    noindent_blocks :: Vector{Int}
 end
 
 function Document(text::AbstractString)

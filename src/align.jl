@@ -47,11 +47,11 @@ Group of FST node indices and required metadata to potentially align them.
     manually added by the user since the formatter would only use 0 or 1 whitespaces.
 """
 struct AlignGroup
-    nodes::Vector{Ref{FST}}
-    node_inds::Vector{Int}
-    line_offsets::Vector{Int}
-    lens::Vector{Int}
-    whitespaces::Vector{Int}
+    nodes        :: Vector{Ref{FST}}
+    node_inds    :: Vector{Int}
+    line_offsets :: Vector{Int}
+    lens         :: Vector{Int}
+    whitespaces  :: Vector{Int}
 end
 AlignGroup() = AlignGroup(Vector{Ref{FST}}[], Int[], Int[], Int[], Int[])
 
@@ -87,6 +87,13 @@ function align_to(g::AlignGroup)::Union{Nothing,Int}
     end
 
     return nothing
+end
+
+function align_to_struct(g::AlignGroup)::Union{Nothing,Int}
+    if !(length(g.lens) > 0)
+        return nothing
+    end
+    return maximum(g.lens)
 end
 
 function align_binaryopcall!(fst::FST, diff::Int)
@@ -195,10 +202,10 @@ function align_struct!(fst::FST)
 
     for (i, n) in enumerate(block_fst.nodes)
         if n.typ === Binary
-            if n.startline - prev_endline > 1
-                push!(groups, g)
-                g = AlignGroup()
-            end
+            # if n.startline - prev_endline > 1
+            #     push!(groups, g)
+            #     g = AlignGroup()
+            # end
 
             nlen = length(n[1])
             ind = findfirst(x -> x.typ === OPERATOR, n.nodes)
@@ -215,10 +222,10 @@ function align_struct!(fst::FST)
             push!(g, n, i, n[ind].line_offset, nlen, ws)
             prev_endline = n.endline
         elseif n.typ === Const && n[end].typ === Binary
-            if n.startline - prev_endline > 1
-                push!(groups, g)
-                g = AlignGroup()
-            end
+            # if n.startline - prev_endline > 1
+            #     push!(groups, g)
+            #     g = AlignGroup()
+            # end
 
             nlen = length(n[1]) + length(n[2])
             binop = n[end]
@@ -234,7 +241,7 @@ function align_struct!(fst::FST)
     push!(groups, g)
 
     for g in groups
-        align_len = align_to(g)
+        align_len = align_to_struct(g)
         align_len === nothing && continue
         for (i, nr) in enumerate(g.nodes)
             n = nr[]

@@ -227,8 +227,8 @@ p_punctuation(style::S, cst::CSTParser.EXPR, s::State) where {S<:AbstractStyle} 
     p_punctuation(DefaultStyle(style), cst, s)
 
 struct FormatRule{T<:AbstractStyle}
-    style::T
-    opts::Options
+    style :: T
+    opts  :: Options
 end
 format_text(text::AbstractString, fr::FormatRule) = format_text(text, fr.style, fr.opts)
 

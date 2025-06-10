@@ -34,8 +34,8 @@ export format,
     MinimalStyle
 
 struct Configuration
-    args::Dict{String,Any}
-    file::Dict{String,Any}
+    args :: Dict{String,Any}
+    file :: Dict{String,Any}
 end
 Configuration() = Configuration(Dict{String,Any}(), Dict{String,Any}())
 Configuration(args) = Configuration(args, Dict{String,Any}())
@@ -63,7 +63,7 @@ for more details.
 See also: [`BlueStyle`](@ref), [`YASStyle`](@ref), [`SciMLStyle`](@ref), [`MinimalStyle`](@ref)
 """
 struct DefaultStyle <: AbstractStyle
-    innerstyle::AbstractStyle
+    innerstyle :: AbstractStyle
 end
 
 DefaultStyle() = DefaultStyle(NoopStyle())

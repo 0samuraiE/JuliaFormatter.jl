@@ -2,7 +2,7 @@
     MinimalStyle()
 """
 struct MinimalStyle <: AbstractStyle
-    innerstyle::Union{Nothing,AbstractStyle}
+    innerstyle :: Union{Nothing,AbstractStyle}
 end
 MinimalStyle() = MinimalStyle(NoopStyle())
 
