@@ -200,7 +200,10 @@ function align_struct!(fst::FST)
     g = AlignGroup()
 
     for (i, n) in enumerate(block_fst.nodes)
-        if n.typ === Binary && n.nodes[1].typ === Call
+        if n.typ === Binary && (
+            n.nodes[1].typ === Call ||
+            (n.nodes[1].typ === Where && n.nodes[1].nodes[1].typ === Call)
+        )
             push!(groups, g)
             g = AlignGroup()
 
