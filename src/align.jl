@@ -196,17 +196,25 @@ function align_struct!(fst::FST)
     length(fst[ind]) == 0 && return
 
     block_fst = fst[ind]
-    prev_endline = block_fst[1].endline
     groups = AlignGroup[]
     g = AlignGroup()
 
     for (i, n) in enumerate(block_fst.nodes)
-        if n.typ === Binary
-            # if n.startline - prev_endline > 1
-            #     push!(groups, g)
-            #     g = AlignGroup()
-            # end
+        if n.typ === Binary && n.nodes[1].typ === Call
+            push!(groups, g)
+            g = AlignGroup()
 
+            nlen = length(n[1])
+            ind = findfirst(x -> x.typ === OPERATOR, n.nodes)
+            ind === nothing && continue
+
+            ws = n[ind].line_offset - (n.line_offset + nlen)
+
+            push!(g, n, i, n[ind].line_offset, nlen, ws)
+
+            push!(groups, g)
+            g = AlignGroup()
+        elseif n.typ === Binary
             nlen = length(n[1])
             ind = findfirst(x -> x.typ === OPERATOR, n.nodes)
             # issue 757
@@ -220,13 +228,7 @@ function align_struct!(fst::FST)
             ws = n[ind].line_offset - (n.line_offset + nlen)
 
             push!(g, n, i, n[ind].line_offset, nlen, ws)
-            prev_endline = n.endline
         elseif n.typ === Const && n[end].typ === Binary
-            # if n.startline - prev_endline > 1
-            #     push!(groups, g)
-            #     g = AlignGroup()
-            # end
-
             nlen = length(n[1]) + length(n[2])
             binop = n[end]
             nlen += length(binop[1])
@@ -235,7 +237,6 @@ function align_struct!(fst::FST)
             ws = binop[ind].line_offset - (n.line_offset + nlen)
 
             push!(g, binop, i, binop[ind].line_offset, nlen, ws)
-            prev_endline = n.endline
         end
     end
     push!(groups, g)

@@ -1038,7 +1038,7 @@
             another_field1::BlahBlahBlah           = 10
             field2::Foo                            = 10
 
-            Options()                              = new()
+            Options() = new()
         end"""
         @test fmt(str_, align_struct_field = true) == str
 
@@ -1087,7 +1087,7 @@
             another_field1::BlahBlahBlah           = 10
             field2::Foo                            = 10
 
-            Options()                              = new()
+            Options() = new()
         end"""
         @test fmt(str, 4, 1, align_struct_field = true) == str
     end
